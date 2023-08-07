@@ -33,10 +33,10 @@ public class Main{
     }
 
     private static void getAllFromAuthorbyName(Connection connection, String name) throws SQLException {
-//        String Query = "SELECT * FROM Authors WHERE Name = ? ";
-        String Query = "SELECT * FROM Authors";
+        String Query = "SELECT * FROM Authors WHERE Name = ? ";
+//        String Query = "SELECT * FROM Authors";
         PreparedStatement statement = connection.prepareStatement(Query);
-//        statement.setString(1, name);
+        statement.setString(1, name);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             System.out.println(resultSet.getString(1) + ", " + resultSet.getString(2)+ ", " + resultSet.getString(3));
@@ -84,7 +84,7 @@ public class Main{
         String query = "INSERT INTO images (name, image) VALUES (?, ?)";
         FileInputStream image = new FileInputStream("wallpaper.jpg");
         PreparedStatement stat = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-        stat.setString(1, "wallpaper");
+        stat.setString(1, "piseth");
         stat.setBlob(2, image);
         stat.executeUpdate();
         ResultSet rs = stat.getGeneratedKeys();
@@ -110,10 +110,10 @@ public class Main{
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }catch (ClassNotFoundException | FileNotFoundException e) {
+        }catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-
 }
